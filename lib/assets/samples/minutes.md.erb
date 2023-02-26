@@ -1,0 +1,33 @@
+<% require 'date' -%>
+<% require 'time_spent/helper' -%>
+% TimeSpent Minutes
+% <%= Date.today %>
+% <%= ENV['USERNAME'] %>
+<% if @optns.any? -%>
+
+### Options
+
+<%= Helper::Record.(@optns) %>
+<% end -%>
+
+<%
+  cols = [
+    Helper::Column.new('Date', size: 10),
+    Helper::Column.new('Project', size: 15),
+    Helper::Column.new('Contributor', size: 15),
+    Helper::Column.new('Spent, H', key: :spent, size: 10, just: :right, decor: proc{|v| v / 60.0}),
+    Helper::Column.new('Rate',  size: 10, just: :right),
+    Helper::Column.new('Reword,$', key: :total, size: 10, just: :right),
+    Helper::Column.new('Task',  size: 10),
+    Helper::Column.new('Description', key: :desc, size: 0),
+  ]
+
+  require 'ostruct'
+  total = OpenStruct.new(date: '**Total**',
+    spent: @model.map(&:spent).sum.round(2, :half => :even),
+    total: @model.map(&:total).sum.round(2, :half => :even)
+  )
+-%>
+### Minutes
+
+<%= Helper::Table.(cols, @model.sort_by(&:date).push(total)) %>

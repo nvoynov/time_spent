@@ -1,0 +1,76 @@
+# Time Spent
+project 'TimeSpent'
+contributor 'nvoynov'
+hourly_rate 0.00
+date_format '%Y-%m-%d'
+
+track 2023_02_19, spent: '3h', task: '#dev', desc: <<~EOF
+  - designing core objects Track, Sheet, Project, and DSL;
+  - designing object filter;
+EOF
+
+track 2023_02_20, spent: 5 * 60, task: '#dev', desc: <<~EOF
+  - finished tests for Filter
+  - designed tests for Track, Sheet, DSL, and Project
+  - start on samples (report templates)
+EOF
+
+track 2023_02_20, spent: 3 * 60, task: '#dev', desc: <<~EOF
+  designing ERB renderer and then "summary" and "minutes" samples
+EOF
+
+track 2023_02_21, spent: 8 * 60, task: '#dev', desc: <<~EOF
+  - designed CLI interface of 'help', 'init', and 'report' commands;
+  - developed 'help' and 'init'; created OptParser for 'report'
+  - started redesign of core classes, deleted Project and introduced TrackDecor(track, project, contributor); the main idea is pass filtered  Array<TrackDecor> into Erb; reports should be redesigned also
+  - designed Roster to hold all directories with .timespent; that should provide the ability to build cross-project reports like "show my efforts for this year", etc.
+EOF
+
+track 2023_02_21, spent: 60, task: '#dev', desc: 'redesigned Loader and its test'
+
+track 2023_02_22, spent: 5 * 60, task: '#dev', desc: <<~EOF
+  - optimized Sheet#tracks, now it returns array<Track>
+  - designed Helper module for printing tables and hashes
+  - redesigned 'summary.md.erb' for using Helper
+EOF
+
+track 2023_02_22, spent: 30, task: '#dev', desc: "redesigned 'minutes.md.erb'"
+
+track 2023_02_22, spent: 60, task: '#doc', desc: <<~EOF
+  wrote #overview section of README.md
+EOF
+
+track 2023_02_22, spent: 90, task: '#dev', desc: <<~EOF
+  testing Roster and CLI fixed Parser and some minor things in reports; now it seems to work, it's time to proceed with exe/timespent
+EOF
+
+track 2023_02_23, spent: 3 * 60, task: '#dev', desc: <<~EOF
+  - designed exe/timespent;
+  - improved README.md#overview;
+  - fixed .gemspec
+EOF
+
+track 2023_02_23, spent: 60, task: '#dev', desc: 'fixed long string like verbose tasks descriptions'
+
+track 2023_02_23, spent: 60, task: '#doc', desc: 'written #install and #usage sections of README.md'
+
+track 2023_02_23, spent: 60, task: '#doc', desc: 'optimized a bit moving parser into cli and task into sheet; planned some small changes in arguments - date should accept integer like 2023_02_10'
+
+track 2023_02_24, spent: 60, task: '#dev', desc: <<~EOF
+  DSL.track #date accepts integers
+  - Roster became part of config.rb
+EOF
+
+track 2023_02_25, spent: 3 * 60, task: '#dev', desc: <<~EOF
+  - Roster dissolved inside config.rb
+  - Loader find timesheets in root and root/.timespent/ folders
+  - report accept --allround option for all registered folders
+EOF
+
+track 2023_02_26, spent: 3 * 60, task: '#dev', desc: <<~EOF
+  - daily, weekly, and monthly reports
+  - some improvements in options parser
+EOF
+
+track 2023_02_26, spent: 30, task: '#doc', desc: 'README'
+track 2023_02_26, spent: 60, task: '#dev', desc: 'CLI.report error handler'

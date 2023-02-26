@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'time_spent/cli'
+include TimeSpent
+
+cmd = ARGV.shift&.downcase
+case cmd
+when NilClass
+  # puts 'CLI.report'
+  CLI.report([])
+when /init/   # punch <dir>.timesheet
+  # puts 'CLI.init'
+  CLI.init
+when /help/
+  # puts 'CLI.help'
+  CLI.help
+else
+  # puts "CLI.report #{ARGV.unshift cmd}"
+  CLI.report(ARGV.unshift cmd)
+end

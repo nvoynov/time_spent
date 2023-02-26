@@ -1,0 +1,40 @@
+<% require 'date' -%>
+<% require 'time_spent/helper' -%>
+% TimeSpent Summary
+% <%= Date.today %>
+% <%= ENV['USERNAME'] %>
+<% if @optns.any? -%>
+
+### Options
+
+<%= Helper::Record.(@optns) %>
+<% end -%>
+
+<%
+  cols = [
+    Helper::Column.new('Project', size: 15),
+    Helper::Column.new('First Track', key: :min),
+    Helper::Column.new('Last Track',  key: :max),
+    Helper::Column.new('Spent, H',  key: :spent, size: 10, just: :right),
+    Helper::Column.new('Reward,$', key: :total, size: 10, just: :right),
+  ]
+  klass = Struct.new(:project, :min, :max, :spent, :total)
+  rows = @model.group_by(&:project).map{|project, tracks|
+    dates = tracks.map(&:date)
+    klass.new(project,
+      dates.min || Date.today,
+      dates.max || Date.today,
+      (tracks.map(&:spent).sum / 60.0).round(2, :half => :even),
+      tracks.map(&:total).sum.round(2, :half => :even)
+    )
+  }
+  total = klass.new("**Total**", nil, nil,
+    rows.map(&:spent).sum,
+    rows.map(&:total).sum
+  )
+  rows << total
+-%>
+
+### Efforts
+
+<%= Helper::Table.(cols, rows) %>

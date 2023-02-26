@@ -1,0 +1,35 @@
+<% require 'date' -%>
+<% require 'time_spent/helper' -%>
+% TimeSpent Weekly
+% <%= Date.today %>
+% <%= ENV['USERNAME'] %>
+<% if @optns.any? -%>
+
+### Options
+
+<%= Helper::Record.(@optns) %>
+<% end -%>
+
+<%
+  cols = [
+    Helper::Column.new('Year', size: 10),
+    Helper::Column.new('Week'),
+    Helper::Column.new('Spent,H', key: :spent, size: 10, just: :right,
+      decor: proc{|v| v / 60.0}),
+    Helper::Column.new('Reword,$', key: :total, size: 10, just: :right),
+  ]
+
+  klass = Struct.new(:year, :week, :spent, :total)
+  grfu = proc{|obj| [obj.date.year, obj.date.cweek]}
+  mkfu = proc{|(year, week), tracks|
+    klass.new(year, week,
+      tracks.map(&:spent).sum,
+      tracks.map(&:total).sum)
+  }
+  tracks = @model.sort_by(&:date).group_by(&grfu).map(&mkfu)
+  total = mkfu.(['**Total**', ''], tracks)
+  tracks.push(total)
+-%>
+### Weekly
+
+<%= Helper::Table.(cols, tracks) %>

@@ -1,0 +1,14 @@
+project 'TimeSpent'
+contributor 'nvoynov'
+hourly_rate 0.00
+date_format '%Y-%m-%d'
+
+track '2023-02-19', spent: 3 * 60, desc: <<~EOF
+  designing core objects Track, Sheet, Project, DSL, and Filter
+EOF
+
+track '2023-02-20', task: '#doc', spent: 1, desc: <<~EOF
+  designing README.md and CHANGELOG.md
+EOF
+
+track '2023-02-20', spent: '1h15m', desc: 'testing DSL'
