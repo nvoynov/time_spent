@@ -20,7 +20,7 @@ TimeSpent assumes that:
 - every timesheet belongs exactly to one contributor and one project;
 - a contributor can track time among several sheets (e.g. one sheet per month.)
 
-You can see an example of a timesheet right here in [time_spent.timespent](time_spent.timespent) file.
+You can see an example of a timesheet right here in [time_spent.timesheet](time_spent.timesheet) file.
 
 ## Installation
 
